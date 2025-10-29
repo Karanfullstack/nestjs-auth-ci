@@ -5,8 +5,7 @@ import { CoreModule } from './core/core.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import appConfig from './config/app.config';
-import { APP_GUARD } from '@nestjs/core';
-import { AccessTokenGuard } from './auth/authentication/guards/access-token.guard';
+
 @Module({
     imports: [
         ConfigModule.forRoot({

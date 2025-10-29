@@ -31,8 +31,8 @@ export class UserService {
         const user = await this.userRepository.remove({ id } as UserEntity);
         return !!user;
     }
-    async updateUser(id: number, UserUpdateDto: UserUpdateDto): Promise<UserEntity> {
-        return await this.userRepository.save({ id, ...UserUpdateDto });
+    async updateUser(id: number, userUpdateDto: UserUpdateDto): Promise<UserEntity> {
+        return await this.userRepository.save({ id, ...userUpdateDto });
     }
 
     async findUserByOrFail(id: number): Promise<UserEntity> {

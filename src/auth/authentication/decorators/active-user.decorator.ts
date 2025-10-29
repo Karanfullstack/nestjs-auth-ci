@@ -2,6 +2,7 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { USER_REQUEST } from 'src/auth/const/request-user';
 import { ActiveUserPayload } from '../interface/jwt-payload.interface';
 
+// Custom param decorator to extract the active user from the request
 export const ActiveUser = createParamDecorator(
     (field: keyof ActiveUserPayload | undefined, ctx: ExecutionContext) => {
         const request = ctx.switchToHttp().getRequest();
