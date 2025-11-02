@@ -109,6 +109,7 @@ export class AuthService {
             this.signInToken<Partial<ActiveUserPayload>>(user.id, this.jwt.accessTokenTtl, {
                 email: user.email,
                 role: user.role,
+                permissions: user.permissions,
             }),
 
             this.signInToken(user.id, this.jwt.refreshTokenTtl, {

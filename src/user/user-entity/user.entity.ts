@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Role } from '../../auth/authorization/enums/role.enum';
+import { PermissionsOptions } from 'src/auth/claim-based/enums/claim-based.enum';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -17,6 +18,9 @@ export class UserEntity {
 
     @Column({ enum: Role, default: Role.REGULAR })
     role: Role;
+
+    @Column({ enum: PermissionsOptions, default: [], type: 'json' })
+    permissions: PermissionsOptions[];
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
