@@ -19,7 +19,7 @@ export class UserEntity {
     @Column({ enum: Role, default: Role.REGULAR })
     role: Role;
 
-    @Column({ enum: PermissionsOptions, default: [], type: 'json' })
+    @Column({ enum: PermissionsOptions, default: [PermissionsOptions.CREATE_USER], type: 'json' })
     permissions: PermissionsOptions[];
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

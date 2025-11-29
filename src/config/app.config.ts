@@ -7,6 +7,8 @@ export default registerAs('app', () => ({
     databaseName: process.env.DATABASE_NAME,
     databasePassword: process.env.DATABASE_PASSWORD,
     databaseUser: process.env.DATABASE_USER,
+    redisPort: parseInt(process.env.REDIS_PORT, 10),
+    redisHost: process.env.REDIS_HOST,
     host: process.env.HOST,
     jwtSecret: process.env.JWT_SECRET,
     jwtExpiresIn: process.env.JWT_EXPIRES_IN,

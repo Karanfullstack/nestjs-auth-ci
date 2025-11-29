@@ -1,0 +1,40 @@
+name: nest-auth
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+      # default port 5432
+    networks:
+      - nest-auth-net
+    volumes:
+      - nest-auth-vol:/var/lib/postgresql/data
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - nest-auth-net
+
+  auth-service-nest:
+    image: nestjs-auth:v1
+    container_name: auth-container
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./.env
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    depends_on:
+      - db
+      - redis
+    networks:
+      - nest-auth-net
+
+volumes:
+  nest-auth-vol:
+networks:
+  nest-auth-net:

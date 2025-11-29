@@ -5,6 +5,8 @@ import { CreateUserDto } from './user-dto/user.dto';
 import { UserService } from './user.service';
 import { Permissions } from 'src/auth/claim-based/claim-based.decorator';
 import { PermissionsOptions } from 'src/auth/claim-based/enums/claim-based.enum';
+import { Auth } from 'src/auth/authentication/decorators/auth.decorator';
+import { AuthType } from 'src/auth/authentication/enums/auth-type.enum';
 
 @Controller('user')
 export class UserController {
@@ -17,8 +19,15 @@ export class UserController {
     }
 
     @Get()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async getUsers(@ActiveUser() user: ActiveUserPayload) {
         const users = await this.userService.getAllUsers();
         return users;
+    }
+
+    @Auth(AuthType.None)
+    @Get('/health')
+    async healthCheck() {
+        return { health: true, version: 'v1', host: process.env.NODE_HOST || 'not-found' };
     }
 }
