@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: karanfullstack/nest-auth
-      IMAGE_TAG: build-${{github.run_number}}
+      IMAGE_TAG: build-${{github.sha}}
     needs:
       - build-and-push
     steps:
