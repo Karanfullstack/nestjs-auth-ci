@@ -28,6 +28,6 @@ export class UserController {
     @Auth(AuthType.None)
     @Get('/health')
     async healthCheck() {
-        return { health: true, version: 'v1', host: process.env.NODE_HOST || 'not-found' };
+        return { health: true, version: 'v2', host: process.env.NODE_HOST || 'not-found' };
     }
 }
