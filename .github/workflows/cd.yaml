@@ -10,7 +10,7 @@ jobs:
       contents: write
     env:
       IMAGE_NAME: karanfullstack/nest-auth
-      IMAGE_TAG: build-${{github.run_number}}
+      IMAGE_TAG: build-${{github.sha}}
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
