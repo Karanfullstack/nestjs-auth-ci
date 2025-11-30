@@ -35,7 +35,7 @@ services:
     networks:
       - nest-auth-net
   auth-service-nest:
-    image: karanfullstack/nestjs-auth:v1
+    image: karanfullstack/nest-auth:build-2
 
     deploy:
       replicas: 1
