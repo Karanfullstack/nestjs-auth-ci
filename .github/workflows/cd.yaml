@@ -55,7 +55,7 @@ jobs:
         uses: appleboy/ssh-action@v1
         with:
           host: ${{secrets.SWARM_HOST_MANAGER}}
-          username: ${{secrets.DOCKER_USERNAME}}
+          username: ${{secrets.SWARM_HOST_USERNAME}}
           key: ${{secrets.SWARM_SSH_KEY}}
           port: ${{secrets.SWARM_SSH_PORT}}
           script: |
