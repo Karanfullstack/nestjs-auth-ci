@@ -33,7 +33,7 @@ services:
     networks:
       - nest-auth-net
   auth-service-nest:
-    image: karanfullstack/nest-auth:build-01a8f01066ddce612fc1211f22433258ee6c190b
+    image: karanfullstack/nest-auth:build-6604aca67a866ea9fe9a6ba0f1fd501ed27fa25c
     deploy:
       replicas: 1
       update_config:
