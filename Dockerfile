@@ -41,7 +41,7 @@ WORKDIR /app
 
 COPY package*.json ./ 
 
-RUN npm ci --ignore-scripts
+RUN npm install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
@@ -56,7 +56,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y procps wget && \
  rm -rf /var/lib/apt/lists/*
 
-COPY --from=builder /app/dist ./
+COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
 
 COPY --from=builder  /app/wait-for-it.sh /usr/local/bin/wait-for-it.sh
