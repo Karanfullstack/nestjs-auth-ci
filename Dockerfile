@@ -70,4 +70,4 @@ EXPOSE 3000
 RUN useradd -m appuser
 USER appuser
 
-ENTRYPOINT [ "/user/local/bin/entrypoint.sh" ]
+ENTRYPOINT [ "/usr/local/bin/entrypoint.sh" ]
