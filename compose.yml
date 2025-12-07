@@ -5,25 +5,23 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "1234"
       POSTGRES_DB: nest-db
-      # default port 5432
     deploy:
       replicas: 1
       update_config:
         order: start-first
         failure_action: rollback
         delay: 10s
-
       rollback_config:
         parallelism: 1
         order: start-first
-
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres
       interval: 10s
       timeout: 5s
       retries: 3
       start_period: 5s
-
     networks:
       - nest-auth-net
     volumes:
@@ -31,40 +29,33 @@ services:
   redis:
     image: redis
     ports:
-      - "6379:6379"
+      - '6379:6379'
     networks:
       - nest-auth-net
   auth-service-nest:
-    image: karanfullstack/nest-auth:build-2
-
+    image: karanfullstack/nest-auth:build-185e64cc72ef9a220354984d8f2ade134acdd085
     deploy:
       replicas: 1
       update_config:
         order: start-first
         failure_action: rollback
         delay: 10s
-
       rollback_config:
         parallelism: 1
         order: start-first
-
     healthcheck:
       test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:3000/user/health",
-        ]
+        - CMD
+        - wget
+        - '--no-verbose'
+        - '--tries=1'
+        - '--spider'
+        - http://localhost:3000/user/health
       interval: 10s
       timeout: 5s
       retries: 3
-
-    # container_name: auth-container (in swarm no need to use container name)
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - PORT=3000
       - DATABASE_PORT=5432
@@ -83,8 +74,7 @@ services:
       - NODE_HOST="{{.Node.Hostname}}"
     networks:
       - nest-auth-net
-
 volumes:
-  nest-auth-vol:
+  nest-auth-vol: null
 networks:
-  nest-auth-net:
+  nest-auth-net: null
