@@ -1,12 +1,10 @@
 services:
   db:
-    image: postgres:16
+    image: postgres:15
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres123
+      POSTGRES_PASSWORD: 1234
       POSTGRES_DB: nest-db
-    ports:
-      - '5432:5432'
     deploy:
       replicas: 1
       update_config:
@@ -35,7 +33,7 @@ services:
     networks:
       - nest-auth-net
   auth-service-nest:
-    image: karanfullstack/nest-auth:build-96d01858c63466f57790f2a9cabcc121d502bcc9
+    image: karanfullstack/nest-auth:build-0432b45924fdf41a75dfc13dcaad7069850ecd3e
     deploy:
       replicas: 1
       update_config:
@@ -62,12 +60,12 @@ services:
       - PORT=3000
       - DATABASE_PORT=5432
       - DATABASE_NAME=nest-db
-      - DATABASE_PASSWORD=postgres123
+      - DATABASE_PASSWORD=1234
       - DATABASE_USER=postgres
       - HOST=db
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - DATABASE_URL=postgres://postgres:1234@localhost:5432/nest-db
+      - DATABASE_URL=postgres://postgres:1234@localhost:5434/nest-db
       - JWT_EXPIRES_IN=3600
       - REFRESH_JWT_EXPIRES_IN=86400
       - JWT_SECRET=your_jwt_secret_key
