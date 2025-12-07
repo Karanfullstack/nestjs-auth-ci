@@ -3,7 +3,7 @@ services:
     image: postgres:15
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
+      POSTGRES_PASSWORD: "1234"
       POSTGRES_DB: nest-db
     deploy:
       replicas: 1
@@ -65,9 +65,9 @@ services:
       - HOST=db
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - DATABASE_URL=postgres://postgres:1234@localhost:5434/nest-db
-      - JWT_EXPIRES_IN=3600
-      - REFRESH_JWT_EXPIRES_IN=86400
+      - DATABASE_URL=postgres://postgres:1234@localhost:5432/nest-db
+      - JWT_EXPIRES_IN=3600 # 1 hour
+      - REFRESH_JWT_EXPIRES_IN=86400 # 1 day
       - JWT_SECRET=your_jwt_secret_key
       - JWT_ISSUER=localhost:3000
       - JWT_AUDIENCE=localhost:3000
