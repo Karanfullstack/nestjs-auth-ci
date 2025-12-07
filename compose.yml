@@ -6,8 +6,7 @@ services:
       POSTGRES_PASSWORD: postgres123
       POSTGRES_DB: nest-db
     ports:
-      - "5432:5432"
-      # default port 5432
+      - '5432:5432'
     deploy:
       replicas: 1
       update_config:
@@ -36,7 +35,7 @@ services:
     networks:
       - nest-auth-net
   auth-service-nest:
-    image: karanfullstack/nest-auth:build-83be544e5888498bd426019456519edeb281b841
+    image: karanfullstack/nest-auth:build-4e29a28101ba85a3aa9e4a8957ef1e8abd6abc0e
     deploy:
       replicas: 1
       update_config:
