@@ -12,18 +12,17 @@ services:
         order: start-first
         failure_action: rollback
         delay: 10s
-
       rollback_config:
         parallelism: 1
         order: start-first
-
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres
       interval: 10s
       timeout: 5s
       retries: 3
       start_period: 5s
-
     networks:
       - nest-auth-net
     volumes:
@@ -35,40 +34,33 @@ services:
   redis:
     image: redis
     ports:
-      - "6379:6379"
+      - '6379:6379'
     networks:
       - nest-auth-net
   auth-service-nest:
-    image: karanfullstack/nest-auth:build-2
-
+    image: karanfullstack/nest-auth:build-0432b45924fdf41a75dfc13dcaad7069850ecd3e
     deploy:
       replicas: 1
       update_config:
         order: start-first
         failure_action: rollback
         delay: 10s
-
       rollback_config:
         parallelism: 1
         order: start-first
-
     healthcheck:
       test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:3000/user/health",
-        ]
+        - CMD
+        - wget
+        - '--no-verbose'
+        - '--tries=1'
+        - '--spider'
+        - http://localhost:3000/user/health
       interval: 10s
       timeout: 5s
       retries: 3
-
-    # container_name: auth-container (in swarm no need to use container name)
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - PORT=3000
       - DATABASE_PORT=5432
@@ -79,17 +71,16 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - DATABASE_URL=postgres://postgres:1234@localhost:5434/nest-db
-      - JWT_EXPIRES_IN=3600 # 1 hour
-      - REFRESH_JWT_EXPIRES_IN=86400 # 1 day
+      - JWT_EXPIRES_IN=3600
+      - REFRESH_JWT_EXPIRES_IN=86400
       - JWT_SECRET=your_jwt_secret_key
       - JWT_ISSUER=localhost:3000
       - JWT_AUDIENCE=localhost:3000
       - NODE_HOST="{{.Node.Hostname}}"
     networks:
       - nest-auth-net
-
 volumes:
-  nest-auth-vol:
+  nest-auth-vol: null
 networks:
   nest-auth-net:
 secrets:
