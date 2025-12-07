@@ -2,10 +2,10 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: nest-db
-      # default port 5432
+      - POSTGRES_USER_FILE=/run/secrets/db_username #postgres
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password # 1234
+      - POSTGRES_DB_File=/run/secrets/db_name #nest-db
+        # default port 5432
     deploy:
       replicas: 1
       update_config:
@@ -28,6 +28,10 @@ services:
       - nest-auth-net
     volumes:
       - nest-auth-vol:/var/lib/postgresql/data
+    secrets:
+      - db_password
+      - db_username
+      - db_name
   redis:
     image: redis
     ports:
@@ -88,3 +92,10 @@ volumes:
   nest-auth-vol:
 networks:
   nest-auth-net:
+secrets:
+  db_password:
+    external: true
+  db_username:
+    external: true
+  db_name:
+    external: true
