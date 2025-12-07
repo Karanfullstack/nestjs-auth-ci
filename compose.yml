@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:15
+    image: postgres:16
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres123
@@ -32,7 +32,7 @@ services:
   redis:
     image: redis
     ports:
-      - '6379:6379'
+      - "6379:6379"
     networks:
       - nest-auth-net
   auth-service-nest:
@@ -50,15 +50,15 @@ services:
       test:
         - CMD
         - wget
-        - '--no-verbose'
-        - '--tries=1'
-        - '--spider'
+        - "--no-verbose"
+        - "--tries=1"
+        - "--spider"
         - http://localhost:3000/user/health
       interval: 10s
       timeout: 5s
       retries: 3
     ports:
-      - '3000:3000'
+      - "3000:3000"
     environment:
       - PORT=3000
       - DATABASE_PORT=5432
