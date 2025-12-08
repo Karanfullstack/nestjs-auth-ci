@@ -33,11 +33,11 @@ services:
   redis:
     image: redis
     ports:
-      - "6379:6379"
+      - '6379:6379'
     networks:
       - nest-auth-net
   auth-service-nest:
-    image: karanfullstack/nest-auth:build-8a6c9c04934ce6f24047a8e7a5a3113d2bb24fab
+    image: karanfullstack/nest-auth:build-7a2cf3b1a7b0bc01b40ea7e7c46d0851a3542185
     deploy:
       replicas: 1
       update_config:
@@ -51,15 +51,15 @@ services:
       test:
         - CMD
         - wget
-        - "--no-verbose"
-        - "--tries=1"
-        - "--spider"
+        - '--no-verbose'
+        - '--tries=1'
+        - '--spider'
         - http://localhost:3000/user/health
       interval: 10s
       timeout: 5s
       retries: 3
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - PORT=3000
       - DATABASE_PORT=5432
@@ -79,10 +79,9 @@ services:
     networks:
       - nest-auth-net
 volumes:
-  nest-auth-vol:
+  nest-auth-vol: null
 networks:
-  nest-auth-net:
-
+  nest-auth-net: null
 secrets:
   db_password:
     external: true
