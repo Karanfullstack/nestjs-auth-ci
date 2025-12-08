@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import fs from 'node:fs';
+import * as fs from 'node:fs';
 
 const readEnvFromFile = (name: string): string => {
     const file_name = `${name}_FILE`;
