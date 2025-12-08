@@ -64,7 +64,7 @@ services:
       - PORT=3000
       - DATABASE_PORT=5432
       - DATABASE_NAME=nest-db
-      - DATABASE_PASSWORD=1234
+      - DATABASE_PASSWORD_FILE=/run/secrets/db_password
       - DATABASE_USER=postgres
       - HOST=db
       - REDIS_HOST=redis
@@ -78,6 +78,8 @@ services:
       - NODE_HOST="{{.Node.Hostname}}"
     networks:
       - nest-auth-net
+    secrets:
+      - db_password
 volumes:
   nest-auth-vol:
 networks:
