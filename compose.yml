@@ -63,9 +63,9 @@ services:
     environment:
       - PORT=3000
       - DATABASE_PORT=5432
-      - DATABASE_NAME=/run/secrets/db_name
+      - DATABASE_NAME_FILE=/run/secrets/db_name
       - DATABASE_PASSWORD_FILE=/run/secrets/db_password
-      - DATABASE_USER=/run/secrets/db_username
+      - DATABASE_USER_FILE=/run/secrets/db_username
       - HOST=db
       - REDIS_HOST=redis
       - REDIS_PORT=6379
