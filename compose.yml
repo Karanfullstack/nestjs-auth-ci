@@ -63,9 +63,9 @@ services:
     environment:
       - PORT=3000
       - DATABASE_PORT=5432
-      - DATABASE_NAME=nest-db
+      - DATABASE_NAME=/run/secrets/db_name
       - DATABASE_PASSWORD_FILE=/run/secrets/db_password
-      - DATABASE_USER=postgres
+      - DATABASE_USER=/run/secrets/db_username
       - HOST=db
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -80,6 +80,8 @@ services:
       - nest-auth-net
     secrets:
       - db_password
+      - db_username
+      - db_name
 volumes:
   nest-auth-vol: null
 networks:

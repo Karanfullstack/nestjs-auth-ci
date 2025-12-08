@@ -2,13 +2,16 @@ import { registerAs } from '@nestjs/config';
 import * as fs from 'node:fs';
 
 const readEnvFromFile = (name: string): string => {
-    const file_name = `${name}_FILE`;
     try {
-        return fs.readFileSync(file_name, 'utf-8').trim();
+        const filePath = process.env[`${name}_FILE`];
+        if (filePath && fs.existsSync(filePath)) {
+            return fs.readFileSync(filePath, 'utf8').trim();
+        }
+        return process.env[name] ?? '';
     } catch (error) {
-        console.log('failed to read file env', name, error);
+        console.log('env file failed', error, name);
+        return '';
     }
-    return process.env[name];
 };
 
 export default registerAs('app', () => ({
