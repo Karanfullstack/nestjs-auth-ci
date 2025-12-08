@@ -27,9 +27,9 @@ services:
     volumes:
       - nest-auth-vol:/var/lib/postgresql/data
     secrets:
-      - db_password=/run/secrets/db_password
-      - db_username=/run/secrets/db_username
-      - db_name=/run/secrets/db_name
+      - db_password
+      - db_username
+      - db_name
   redis:
     image: redis
     ports:
