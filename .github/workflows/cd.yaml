@@ -66,4 +66,4 @@ jobs:
                       git fetch origin main
                       git checkout origin/main
                       docker pull ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
-                      docker stack deploy -c compose.yml nest-app
+                      docker stack deploy -c compose.yaml nest-app
