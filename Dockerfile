@@ -35,19 +35,21 @@
 
 FROM node:22-slim AS builder
 
-RUN apt-get update && apt-get install -y procps
+RUN apt-get update && apt-get install -y procps 
 
 WORKDIR /app
 
 COPY package*.json ./ 
 
+# install dependencies with frozen lockfile to ensure consistent installs and ignore scripts to speed up installation
 RUN npm install --frozen-lockfile --ignore-scripts
 
 COPY . .
 
 RUN npm run build
 
-RUN npm prune --omit-dev
+# npm prune to remove dev dependencies and reduce image size
+RUN npm prune --omit-dev 
 
 FROM node:22-slim AS runner
 
