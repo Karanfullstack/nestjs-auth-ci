@@ -37,13 +37,12 @@ jobs:
                   git config --local user.name github-actions
                   git config --local user.email github-action@github.com
                   git add .
-                  git commit -m "bump the image version ${{env.IMAGE_TAG}}" [skip ci]
+                  git commit -m "bump the image version ${{env.IMAGE_TAG}} [skip ci]"
 
             - name: Push the changes
               uses: ad-m/github-push-action@master
               with:
                   github_token: ${{steps.generate_token.outputs.token}}
-                  branch: main
 
             - name: Build docker image
               run: docker build -t ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}} --platform linux/amd64 .
