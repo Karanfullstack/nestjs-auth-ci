@@ -1,7 +1,7 @@
 name: nest-auth
 services:
     db:
-        image: postgres
+        image: postgres:15-alpine
         environment:
             POSTGRES_USER: ${DATABASE_USER}
             POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -19,6 +19,9 @@ services:
             - nest-auth-net
 
     auth-service-nest:
+        build:
+            context: .
+            dockerfile: Docker/dev/Dockerfile
         image: nestjs-auth:v1
         container_name: auth-container
         ports:
