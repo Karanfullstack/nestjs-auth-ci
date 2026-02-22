@@ -15,17 +15,7 @@ jobs:
             - name: Checkout the code
               uses: actions/checkout@v4
               with:
-                  persist-credentials: true
-            - name: Build docker image
-              run: docker build -t ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}} --platform linux/amd64 .
-
-            - name: Login into docker hub
-              uses: docker/login-action@v3
-              with:
-                  username: ${{secrets.DOCKER_USERNAME}}
-                  password: ${{secrets.DOCKER_PASSWORD}}
-            - name: Push image to docker hub
-              run: docker push ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
+                  persist-credentials: false
 
             - name: Update compose file
               uses: fjogeleit/yaml-update-action@v0.16.1
@@ -34,13 +24,38 @@ jobs:
                   propertyPath: 'services["auth-service-nest"].image'
                   value: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
                   commitChange: false
-            - name: Commit the changes
+
+            - name: Generate Token
+              id: generate_token
+              uses: tibdex/github-app-token@v2
+              with:
+                  app_id: ${{secrets.APP_ID}}
+                  private_key: ${{secrets.BYPASS_KEY}}
+
+            - name: Commit files
               run: |
-                  git config user.name github-actions
-                  git config user.email github-action@github.com
+                  git config --local user.name github-actions
+                  git config --local user.email github-action@github.com
                   git add .
-                  git commit -m "bump the image version ${{env.IMAGE_TAG}}"
-                  git push
+                  git commit -m "bump the image version ${{env.IMAGE_TAG}}" [skip ci]
+
+            - name: Push the changes
+              uses: ad-m/github-push-action@master
+              with:
+                  github_token: ${{steps.generate_token.outputs.token}}
+                  branch: main
+
+            - name: Build docker image
+              run: docker build -t ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}} --platform linux/amd64 .
+
+            - name: Login into docker hub
+              uses: docker/login-action@v3
+              with:
+                  username: ${{secrets.DOCKER_USERNAME}}
+                  password: ${{secrets.DOCKER_PASSWORD}}
+
+            - name: Push image to docker hub
+              run: docker push ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
 
     deploy:
         name: Deploy the image to docker swarm aws
