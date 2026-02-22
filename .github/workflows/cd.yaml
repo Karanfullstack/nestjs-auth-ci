@@ -30,7 +30,7 @@ jobs:
             - name: Update compose file
               uses: fjogeleit/yaml-update-action@v0.16.1
               with:
-                  valueFile: compose.yml
+                  valueFile: compose.yaml
                   propertyPath: 'services["auth-service-nest"].image'
                   value: ${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}}
                   commitChange: false
