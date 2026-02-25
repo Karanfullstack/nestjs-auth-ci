@@ -30,7 +30,7 @@ export class UserController {
     async healthCheck() {
         return {
             health: true,
-            version: 'v6 with production ready features',
+            version: 'v7 with production ready features',
             host: process.env.NODE_HOST || 'not-found',
         };
     }
